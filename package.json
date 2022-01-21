@@ -1,0 +1,17 @@
+{
+  "name": "basic-rest-api",
+  "version": "1.0.0",
+  "description": "basic-rest-api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Radhakant Tiwari",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "mongoose": "^6.1.7",
+    "validator": "^13.7.0"
+  }
+}
