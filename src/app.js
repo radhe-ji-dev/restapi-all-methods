@@ -1,4 +1,5 @@
 const express = require("express");
+const { send } = require("express/lib/response");
 const mongoose = require("mongoose");
 const validator = require("validator");
 const Student = require("./modals/student");
@@ -42,8 +43,8 @@ app.get("/students", async (req, res) => {
 // to get students by email using mongo query
 app.get("/students/:id", async (req, res) => {
   try {
-    const _id = req.params.id;
-    const studentdata = await Student.findById(_id);
+    const id = req.params.id;
+    const studentdata = await Student.findById(id);
     console.log(studentdata);
     if (!studentdata) {
       res.status(404).send(e);
@@ -51,7 +52,19 @@ app.get("/students/:id", async (req, res) => {
       res.send(studentdata);
     }
   } catch (e) {
-    res.send(e);
+    res.status(500).send(e);
+  }
+});
+
+//update student using patch request
+app.patch("/students/:id", async (req, res) => {
+  try {
+    const _id = req.params.id;
+    const studentbyidupdate = await Student.findByIdAndUpdate(_id, req.body);
+    res.send(studentbyidupdate);
+    //console.log(studentbyidupdate);
+  } catch (e) {
+    res.status(404).send(e);
   }
 });
 
