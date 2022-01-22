@@ -19,6 +19,9 @@ app.post("/students", async (req, res) => {
     res.status(201).send(creatuser);
   }
 });
+
+// get all students
+
 app.get("/students", async (req, res) => {
   try {
     const usersdata = await Student.find();
@@ -60,11 +63,26 @@ app.get("/students/:id", async (req, res) => {
 app.patch("/students/:id", async (req, res) => {
   try {
     const _id = req.params.id;
-    const studentbyidupdate = await Student.findByIdAndUpdate(_id, req.body);
+    const studentbyidupdate = await Student.findByIdAndUpdate(_id, req.body, {
+      new: true,
+    });
     res.send(studentbyidupdate);
-    //console.log(studentbyidupdate);
+    console.log(studentbyidupdate);
   } catch (e) {
-    res.status(404).send(e);
+    res.status(400).send(e);
+  }
+});
+
+//delete student from db
+app.delete("/students/:id", async (req, res) => {
+  try {
+    const studentbyid_delete = await Student.findByIdAndDelete(req.params.id);
+    if (!req.params.id) {
+      return res.status(400).send();
+    }
+    res.send(studentbyid_delete);
+  } catch (e) {
+    res.status(500).send(e);
   }
 });
 
